@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { UsersListComponent } from './features/users/ui/users-list/users-list.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [UsersListComponent],
   templateUrl: './app.component.html',
 })
 export class AppComponent {}
