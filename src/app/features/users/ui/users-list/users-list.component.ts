@@ -1,15 +1,21 @@
-import { Component, inject, OnInit, resource, signal } from '@angular/core';
-import { Users } from '../../api/types';
-import { UsersApiService } from '../../api/users-api.service';
+import { NgFor, NgIf } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
-import { UserItemComponent } from '../user-item/user-item.component';
-import { NgFor } from '@angular/common';
-import { UsersControlsComponent } from '../users-controls/users-controls.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UsersService } from '../../model/users.service';
+import { UserItemComponent } from '../user-item/user-item.component';
+import { UsersControlsComponent } from '../users-controls/users-controls.component';
 
 @Component({
   selector: 'app-users-list',
-  imports: [MatListModule, UserItemComponent, NgFor, UsersControlsComponent],
+  imports: [
+    MatProgressSpinnerModule,
+    MatListModule,
+    UserItemComponent,
+    UsersControlsComponent,
+    NgFor,
+    NgIf,
+  ],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss',
 })

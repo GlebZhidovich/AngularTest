@@ -1,4 +1,4 @@
-import { User } from './../../api/types';
+import { NgClass, NgFor, TitleCasePipe } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -7,16 +7,15 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { UsersService } from '../../model/users.service';
-import { NgFor, TitleCasePipe, NgClass } from '@angular/common';
 import {
   MatButtonToggleChange,
   MatButtonToggleModule,
 } from '@angular/material/button-toggle';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { debounceTime, fromEvent, map, Subscription } from 'rxjs';
+import { UsersService } from '../../model/users.service';
 
 const DEBOUNCE_TIME = 300;
 

@@ -1,9 +1,9 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { User, Users, UserKeys } from '../api/types';
+import { Users } from '../api/types';
 import { UsersApiService } from '../api/users-api.service';
-import { UsersSortService } from './users-sort.service';
 import { OptionsType, StatusType } from './types';
 import { UsersFilterService } from './users-filter.service';
+import { UsersSortService } from './users-sort.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,10 +17,8 @@ export class UsersService {
   readonly status = signal<StatusType>('idle');
 
   readonly users = computed(() => {
-    const sortedUsers = this.sortService.getSorted(this.loadedUsers());
-    const filteredUsers = this.filterService.getFiltered(sortedUsers);
-
-    return filteredUsers;
+    const filteredUsers = this.filterService.getFiltered(this.loadedUsers());
+    return this.sortService.getSorted(filteredUsers);
   });
 
   get sortData() {

@@ -1,4 +1,4 @@
-<ul class="list">
+<ul class="list" *ngIf="userService.status() === 'success'">
   <li>
     <app-users-controls></app-users-controls>
   </li>
@@ -6,3 +6,12 @@
     <app-user-item [user]="user"></app-user-item>
   </li>
 </ul>
+
+<mat-spinner
+  class="spinner"
+  *ngIf="userService.status() === 'loading'"
+></mat-spinner>
+
+<p class="error" *ngIf="userService.status() === 'error'">
+  Loading Users Error!
+</p>
