@@ -1,5 +1,8 @@
 <ul class="list">
-  <li *ngFor="let user of users()">
+  <li>
+    <app-users-controls></app-users-controls>
+  </li>
+  <li *ngFor="let user of userService.users()">
     <app-user-item [user]="user"></app-user-item>
   </li>
 </ul>

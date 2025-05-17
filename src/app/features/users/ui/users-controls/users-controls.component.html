@@ -1,0 +1,15 @@
+<div>
+  <button
+    mat-button
+    *ngFor="let option of options"
+    (click)="userService.sortByName(option)"
+  >
+    {{ option | titlecase }}
+    <mat-icon
+      [ngClass]="{
+        'icon-up': isUpSortIconClassName(option)
+      }"
+      >arrow_downward</mat-icon
+    >
+  </button>
+</div>

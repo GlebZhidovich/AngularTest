@@ -7,4 +7,6 @@ export type User = {
   };
 };
 
+export type UserKeys = keyof User;
+
 export type Users = Array<User>;
