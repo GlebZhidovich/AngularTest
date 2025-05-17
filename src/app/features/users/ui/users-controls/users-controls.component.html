@@ -1,4 +1,4 @@
-<div>
+<div class="root">
   <button
     mat-button
     *ngFor="let option of options"
@@ -12,4 +12,20 @@
       >arrow_downward</mat-icon
     >
   </button>
+  <mat-form-field>
+    <input
+      #filterInput
+      matInput
+      placeholder="{{ userService.filterData.name | titlecase }}"
+      value="{{ userService.filterData.value }}"
+    />
+  </mat-form-field>
+  <mat-button-toggle-group
+    value="{{ userService.filterData.name }}"
+    (change)="changeFilterName($event)"
+  >
+    <mat-button-toggle *ngFor="let option of options" value="{{ option }}">{{
+      option | titlecase
+    }}</mat-button-toggle>
+  </mat-button-toggle-group>
 </div>
