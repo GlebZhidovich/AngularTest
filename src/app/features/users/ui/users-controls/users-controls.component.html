@@ -2,7 +2,7 @@
   <button
     mat-button
     *ngFor="let option of options"
-    (click)="userService.sortByName(option)"
+    (click)="userService.setSortName(option)"
   >
     {{ option | titlecase }}
     <mat-icon
@@ -16,12 +16,12 @@
     <input
       #filterInput
       matInput
-      placeholder="{{ userService.filterData.name | titlecase }}"
-      value="{{ userService.filterData.value }}"
+      placeholder="{{ userService.filterConfig.name | titlecase }}"
+      value="{{ userService.filterConfig.value }}"
     />
   </mat-form-field>
   <mat-button-toggle-group
-    value="{{ userService.filterData.name }}"
+    value="{{ userService.filterConfig.name }}"
     (change)="changeFilterName($event)"
   >
     <mat-button-toggle *ngFor="let option of options" value="{{ option }}">{{

@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Users } from '../api/types';
-import { UsersApiService } from '../api/users-api.service';
 import { OptionsType, StatusType } from './types';
+import { UserApiDataProvider } from './users-api-data-provider.service';
 import { UsersFilterService } from './users-filter.service';
 import { UsersSortService } from './users-sort.service';
 
@@ -9,7 +9,7 @@ import { UsersSortService } from './users-sort.service';
   providedIn: 'root',
 })
 export class UsersService {
-  private userService = inject(UsersApiService);
+  private userDataProvider = inject(UserApiDataProvider);
   private sortService = inject(UsersSortService);
   private filterService = inject(UsersFilterService);
 
@@ -17,40 +17,48 @@ export class UsersService {
   readonly status = signal<StatusType>('idle');
 
   readonly users = computed(() => {
-    const filteredUsers = this.filterService.getFiltered(this.loadedUsers());
-    return this.sortService.getSorted(filteredUsers);
+    const users = this.loadedUsers();
+    return this.applyFiltersAndSorting(users);
   });
 
-  get sortData() {
-    return this.sortService.config();
+  private applyFiltersAndSorting(users: Users): Users {
+    const filteredUsers = this.filterService.getFiltered(users);
+    return this.sortService.getSorted(filteredUsers);
   }
-  get filterData() {
+
+  get sortName() {
+    return this.sortService.name;
+  }
+
+  get sortType() {
+    return this.sortService.type;
+  }
+
+  get filterConfig() {
     return this.filterService.config();
   }
 
-  sortByName(name: OptionsType) {
-    this.sortService.sortByName(name);
+  setSortName(name: OptionsType): void {
+    this.sortService.setName(name);
   }
 
-  setFilterName(name: OptionsType) {
+  setFilterName(name: OptionsType): void {
     this.filterService.setName(name);
   }
 
-  setFilterValue(value: string) {
+  setFilterValue(value: string): void {
     this.filterService.setValue(value);
   }
 
-  load() {
+  async load(): Promise<void> {
     this.status.set('loading');
 
-    this.userService.getUsers().subscribe({
-      next: (value) => {
-        this.status.set('success');
-        this.loadedUsers.set(value);
-      },
-      error: () => {
-        this.status.set('error');
-      },
-    });
+    try {
+      const users = await this.userDataProvider.getUsers();
+      this.loadedUsers.set(users);
+      this.status.set('success');
+    } catch (error) {
+      this.status.set('error');
+    }
   }
 }

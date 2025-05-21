@@ -44,7 +44,9 @@ export class UsersControlsComponent implements OnInit, OnDestroy {
   filterInput: ElementRef<HTMLInputElement> | undefined;
 
   isUpSortIconClassName(option: 'name' | 'email') {
-    const { name, type } = this.userService.sortData;
+    const name = this.userService.sortName;
+    const type = this.userService.sortType;
+
     return option === name && type === 'up';
   }
 
